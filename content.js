@@ -24,19 +24,24 @@ function back () {
   }
 }
 
-if (annyang) {
-  console.log('Voice Control Activated...');
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  if (request.message === 'execScript') {
+    sendResponse({message: 'running script'});
 
-  annyang.addCommands({
-    'play': play,
-    'pause': pause,
-    'start': play,
-    'stop': pause,
-    'back': back
-  });
+    if (annyang) {
+      console.log('Voice Control Activated...');
 
-  annyang.start({ autoRestart: true });
-} else {
-  console.log('annyang not defined...');
-}
+      annyang.addCommands({
+        'play': play,
+        'pause': pause,
+        'start': play,
+        'stop': pause,
+        'back': back
+      });
 
+      annyang.start({ autoRestart: true });
+    } else {
+      console.log('annyang not defined...');
+    }
+  }
+});
