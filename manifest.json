@@ -13,7 +13,9 @@
   ],
   "content_scripts": [
     {
-      "matches": ["https://louisville.tegrity.com/#/recording/*"],
+      "matches": [
+        "https://louisville.tegrity.com/*"
+      ],
       "js": [
         "jquery.js",
         "annyang.min.js",
