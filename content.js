@@ -5,60 +5,76 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     var $ = jQuery;
 
     $(document).ready(function () {
-      var iFrame = $('#playerContainer')[0];
+      var count = 0;
 
-      if (!iFrame) {
-        console.log('iframe not found with id \'playerContainer\'.');
-        console.log('Returning...');
-        return;
-      }
+      var getIframe = function (cb) {
+        var iFrame = $('#playerContainer')[0];
 
-      if (!iFrame.contentWindow) {
-        console.log('iframe has no property \'contentWindow\'.', iFrame);
-        console.log('Returning...');
-        return;
-      }
+        if (iFrame) {
+          cb(iFrame);
+        } else {
+          count ++;
 
-      var sendMessage = function (fn) {
-        if (fn.indexOf('(') == -1) {
-          fn += '()';
+          if (count < 3) {
+            setTimeout(function () {
+              getIframe(cb);
+            }, 200);
+          } else {
+            console.log('iframe not found with id \'playerContainer\'.');
+            console.log('Returning...');
+          }
+        }
+      };
+
+      getIframe(function (iFrame) {
+        if (!iFrame.contentWindow) {
+          console.log('iframe has no property \'contentWindow\'.', iFrame);
+          console.log('Returning...');
+          return;
         }
 
-        iFrame.contentWindow.postMessage(fn, '*');
-      };
+        var sendMessage = function (fn) {
+          if (fn.indexOf('(') == -1) {
+            fn += '()';
+          }
 
-      var play = function () {
-        sendMessage('Play');
-      };
+          iFrame.contentWindow.postMessage(fn, '*');
+        };
 
-      var pause = function () {
-        sendMessage('Pause');
-      };
+        var play = function () {
+          sendMessage('Play');
+        };
 
-      var back = function () {
-        // haven't succeeded with this one yet...iframe is being a bitch
-      };
+        var pause = function () {
+          sendMessage('Pause');
+        };
 
-      var search = function (_, query) {
-        sendMessage('Search(["' + query.trim() + '"])');
-      };
+        var back = function () {
+          // haven't succeeded with this one yet...iframe is being a bitch
+        };
 
-      console.log('Voice Control Activated...');
+        var search = function (_, query) {
+          sendMessage('Search(["' + query.trim() + '"])');
+        };
 
-      annyang.addCommands({
-        'play': play,
-        'start': play,
-        'pause': pause,
-        'paws': pause,
-        'stop': pause,
-        'back': back,
-        'search': {
-          'regexp': /^(search for) (.*)/,
-          'callback': search
-        }
+        console.log('Voice Control Activated...');
+
+        annyang.addCommands({
+          'play': play,
+          'start': play,
+          'pause': pause,
+          'paws': pause,
+          'stop': pause,
+          'back': back,
+          'search': {
+            'regexp': /^(search for) (.*)/,
+            'callback': search
+          }
+        });
+
+        annyang.start({ autoRestart: true });
       });
 
-      annyang.start({ autoRestart: true });
     });
   }
 });
