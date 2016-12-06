@@ -1,36 +1,103 @@
 <!doctype html>
-<!--
- This page is shown when the extension button is clicked, because the
- "browser_action" field in manifest.json contains the "default_popup" key with
- value "popup.html".
- -->
 <html>
   <head>
-    <title>YouTube Ad Mute & Skip</title>
-    <style>
-      body {
-        font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
-        font-size: 100%;
-      }
-      #status {
-        /* avoid an excessively wide status text */
-        white-space: pre;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        max-width: 400px;
-      }
-    </style>
-
-    <!--
-      - JavaScript and HTML must be in separate files: see our Content Security
-      - Policy documentation[1] for details and explanation.
-      -
-      - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
-     -->
+    <title>Tegrity Voice</title>
   </head>
+  <style>
+    .container {
+      width: 258px;
+      display: block;
+    }
+
+    .container-header,
+    .container-main {
+      display: block;
+      width: 100%;
+      float: left;
+    }
+
+    .container-header {
+      padding: 8px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .container-main {
+      padding: 10px 0;
+    }
+
+    .container-header-inner {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 165px;
+    }
+
+    .icon, .name {
+      display: inline-block;
+      float: left;
+    }
+
+    .icon {
+      width: 40px;
+      height: 40px;
+      margin-right: 12px;
+    }
+
+    .name {
+      font-size: 17px;
+      line-height: 42px;
+      font-family: Arial;
+    }
+
+    .control {
+      padding: 8px 10px;
+      display: block;
+      float: left;
+    }
+
+    .c-name, .c-triggers {
+      display: inline-block;
+      float: left;
+      font-size: 13.5px;
+    }
+
+    .c-name {
+      width: 80px;
+      box-sizing: border-box;
+      padding-left: 29px;
+    }
+
+    .c-triggers {
+      width: calc(100% - 80px);
+      color: rgba(0,0,0,0.7);
+      font-style: italic;
+      box-sizing: border-box;
+      padding-left: 21px;
+    }
+  </style>
   <body>
-    <div id="status"></div>
-    <img id="image-result" hidden>
+    <div class="container">
+      <div class="container-header">
+        <div class="container-header-inner">
+          <img class="icon" src="icon.png">
+          <div class="name">Tegrity Voice</div>
+        </div>
+      </div>
+      <div class="container-main">
+        <div class="control">
+          <div class="c-name">Play:</div>
+          <div class="c-triggers">"Play" or "Start"</div>
+        </div>
+        <div class="control">
+          <div class="c-name">Pause:</div>
+          <div class="c-triggers">"Pause" or "Stop"</div>
+        </div>
+        <div class="control">
+          <div class="c-name">Search:</div>
+          <div class="c-triggers">"Search for ..."</div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
 

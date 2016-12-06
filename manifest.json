@@ -1,11 +1,14 @@
 {
   "manifest_version": 2,
-  "name": "Tegrity Voice Control",
-  "description": "Control your Tegrity lectures by voice. Play, pause, and navigate.",
+  "name": "Tegrity Voice",
+  "description": "Control your Tegrity lectures by voice. Play, pause, and search through lectures.",
   "version": "1.0",
   "browser_action": {
     "default_icon": "icon.png",
     "default_popup": "popup.html"
+  },
+  "icons": {
+    "48": "icon.png"
   },
   "permissions": [
     "activeTab",
